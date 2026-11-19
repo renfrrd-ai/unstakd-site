@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/* Tokens from Unstakd's docs/DESIGN.md ("Terminal Night" dark / light): light-dark(<light>, <dark>). */
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#f6f7f6, #0b0d0c);
+  --panel: light-dark(#ffffff, #121614);
+  --panel-2: light-dark(#e3e8e5, #1f2622);
+  --border: light-dark(#dce2de, #1f2622);
+  --border-strong: light-dark(#c6cec9, #2a332e);
+  --text: light-dark(#101412, #e6ede9);
+  --soft: light-dark(#3a443f, #b7c2bc);
+  --muted: light-dark(#56615b, #8a968f);
+  --dim: light-dark(#6b7670, #5e6a64);
+  --accent: light-dark(#157a42, #3ddc84);
+  --accent-text: light-dark(#157a42, #3ddc84);
+  --accent-ink: light-dark(#ffffff, #06150d);
+  --ok-bg: light-dark(#e6f4ec, #0f2218);
+  --warn: light-dark(#9a5b00, #f5b83d);
+  --log-bg: light-dark(#f1f4f2, #070908);
+  --glow: light-dark(rgb(21 122 66 / 0.08), rgb(61 220 132 / 0.09));
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-soft: var(--soft);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok-bg: var(--ok-bg);
+  --color-warn: var(--warn);
+  --color-log-bg: var(--log-bg);
+  --color-glow: var(--glow);
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--text);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg font-sans text-[15px] leading-relaxed text-text antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display leading-[1.08] font-semibold tracking-[-0.03em];
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Deploy log lines appear one after another. */
+@keyframes log-line {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.log-line {
+  opacity: 0;
+  animation: log-line 0.35s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .log-line {
+    animation: none;
+    opacity: 1;
+  }
+}
