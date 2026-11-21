@@ -1,25 +1,60 @@
 @import "tailwindcss";
 
-/* Tokens from Unstakd's docs/DESIGN.md ("Terminal Night" dark / light): light-dark(<light>, <dark>). */
+/* Same tokens as the Unstakd dashboard (src/app/globals.css there): light-dark(<light>, <dark>). */
 :root {
   color-scheme: light dark;
 
-  --bg: light-dark(#f6f7f6, #0b0d0c);
-  --panel: light-dark(#ffffff, #121614);
-  --panel-2: light-dark(#e3e8e5, #1f2622);
-  --border: light-dark(#dce2de, #1f2622);
-  --border-strong: light-dark(#c6cec9, #2a332e);
-  --text: light-dark(#101412, #e6ede9);
-  --soft: light-dark(#3a443f, #b7c2bc);
-  --muted: light-dark(#56615b, #8a968f);
-  --dim: light-dark(#6b7670, #5e6a64);
-  --accent: light-dark(#157a42, #3ddc84);
-  --accent-text: light-dark(#157a42, #3ddc84);
-  --accent-ink: light-dark(#ffffff, #06150d);
-  --ok-bg: light-dark(#e6f4ec, #0f2218);
-  --warn: light-dark(#9a5b00, #f5b83d);
-  --log-bg: light-dark(#f1f4f2, #070908);
-  --glow: light-dark(rgb(21 122 66 / 0.08), rgb(61 220 132 / 0.09));
+  --bg: light-dark(#f7f7f5, #0e0e10);
+  --panel: light-dark(#ffffff, #17171a);
+  --panel-2: light-dark(#f1f0ec, #232328);
+  --sunken: light-dark(#f7f7f5, #111113);
+  --border: light-dark(#ecebe7, #26262c);
+  --border-strong: light-dark(#e4e3de, #34343c);
+  --border-dashed: light-dark(#d6d5cf, #3a3a42);
+  --text: light-dark(#17171a, #ececef);
+  --soft: light-dark(#3f3f46, #c4c4cc);
+  --muted: light-dark(#6b6b73, #a1a1aa);
+  --dim: light-dark(#8a8a93, #7a7a84);
+
+  --accent: light-dark(#3b5bfd, #4a63f5);
+  --accent-text: light-dark(#3b5bfd, #93a4ff);
+  --accent-strong: light-dark(#2440d8, #b4c0ff);
+  --accent-ink: #ffffff;
+  --accent-soft: light-dark(#eef1ff, #1a1f3a);
+
+  --ink: light-dark(#17171a, #ececef);
+  --on-ink: light-dark(#ffffff, #17171a);
+
+  --ok: light-dark(#1c7a43, #6fd39a);
+  --ok-bg: light-dark(#e6f6ec, #11251a);
+  --ok-dot: light-dark(#22a55b, #3fbf73);
+  --warn: light-dark(#8a5a00, #f5b94a);
+  --warn-bg: light-dark(#fff1d6, #292012);
+  --warn-dot: #e39a0b;
+
+  --tint-domain: light-dark(#eef1ff, #1a1f3a);
+  --tint-domain-strong: light-dark(#e3e8ff, #232a52);
+  --tint-app: light-dark(#f4f4f1, #1f1f24);
+  --tint-app-strong: light-dark(#edede9, #2a2a30);
+  --tint-data: light-dark(#fff6da, #272112);
+  --tint-data-strong: light-dark(#ffefc2, #3a3118);
+  --track: light-dark(#f1f0ec, #26262c);
+
+  /* The log / terminal panel is dark in both themes. */
+  --log-bg: light-dark(#141417, #0b0b0d);
+  --log-border: light-dark(#26262c, #222228);
+  --log-text: #e8e8ec;
+  --log-dim: #7a7a84;
+  --log-muted: #a1a1aa;
+  --log-cmd: #9db0ff;
+  --log-ok: #6fd39a;
+  --log-warn: #f5b94a;
+  --log-chip: #222228;
+  --log-chip-on: #3a3a42;
+
+  --shadow: light-dark(rgba(20, 20, 30, 0.04), rgba(0, 0, 0, 0.25));
+  --shadow-deep: light-dark(rgba(20, 20, 30, 0.16), rgba(0, 0, 0, 0.6));
+  --glow: light-dark(rgb(59 91 253 / 0.1), rgb(74 99 245 / 0.14));
 }
 
 :root[data-theme="dark"] {
@@ -34,23 +69,53 @@
   --color-bg: var(--bg);
   --color-panel: var(--panel);
   --color-panel-2: var(--panel-2);
+  --color-sunken: var(--sunken);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-border-dashed: var(--border-dashed);
   --color-text: var(--text);
   --color-soft: var(--soft);
   --color-muted: var(--muted);
   --color-dim: var(--dim);
   --color-accent: var(--accent);
   --color-accent-text: var(--accent-text);
+  --color-accent-strong: var(--accent-strong);
   --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-ok: var(--ok);
   --color-ok-bg: var(--ok-bg);
+  --color-ok-dot: var(--ok-dot);
   --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-dot: var(--warn-dot);
+  --color-tint-domain: var(--tint-domain);
+  --color-tint-domain-strong: var(--tint-domain-strong);
+  --color-tint-app: var(--tint-app);
+  --color-tint-app-strong: var(--tint-app-strong);
+  --color-tint-data: var(--tint-data);
+  --color-tint-data-strong: var(--tint-data-strong);
+  --color-track: var(--track);
   --color-log-bg: var(--log-bg);
+  --color-log-border: var(--log-border);
+  --color-log-text: var(--log-text);
+  --color-log-dim: var(--log-dim);
+  --color-log-muted: var(--log-muted);
+  --color-log-cmd: var(--log-cmd);
+  --color-log-ok: var(--log-ok);
+  --color-log-warn: var(--log-warn);
+  --color-log-chip: var(--log-chip);
+  --color-log-chip-on: var(--log-chip-on);
   --color-glow: var(--glow);
 
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  --font-display: var(--font-jakarta), system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px var(--shadow), 0 10px 30px var(--shadow);
+  --shadow-soft: 0 1px 2px var(--shadow), 0 6px 16px var(--shadow);
+  --shadow-float: 0 2px 6px var(--shadow), 0 30px 70px -20px var(--shadow-deep);
 }
 
 @layer base {
@@ -67,12 +132,16 @@
   h1,
   h2,
   h3 {
-    @apply font-display leading-[1.08] font-semibold tracking-[-0.03em];
+    @apply font-display leading-[1.1] font-bold tracking-[-0.03em];
   }
 
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
   }
 }
 

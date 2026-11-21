@@ -8,25 +8,37 @@ export function cx(...parts: (string | false | null | undefined)[]) {
 }
 
 export function Wrap({ className, ...props }: ComponentProps<"div">) {
-  return <div className={cx("mx-auto max-w-[1200px] px-4 sm:px-8", className)} {...props} />;
+  return <div className={cx("mx-auto max-w-[1280px] px-4 sm:px-12", className)} {...props} />;
+}
+
+// Three offset bars, the middle one in the accent: same mark as the dashboard.
+export function Glyph({ className }: { className?: string }) {
+  return (
+    <span aria-hidden className={cx("relative block h-[22px] w-[26px] shrink-0", className)}>
+      <span className="absolute top-0 left-0 h-[5px] w-4 rounded-[3px] bg-ink" />
+      <span className="absolute top-[8.5px] left-[5px] h-[5px] w-4 rounded-[3px] bg-accent" />
+      <span className="absolute top-[17px] left-[10px] h-[5px] w-4 rounded-[3px] bg-ink" />
+    </span>
+  );
 }
 
 export function Brand({ name = "unstakd" }: { name?: string }) {
   return (
-    <span className="inline-flex items-center gap-2.5 font-mono text-base font-bold">
-      <i className="h-[18px] w-2.5 rounded-[1.5px] bg-accent" aria-hidden />
+    <span className="inline-flex items-center gap-2.5 text-lg font-bold tracking-[-0.02em]">
+      <Glyph />
       {name}
     </span>
   );
 }
 
 const buttonStyles = {
-  primary: "border-transparent bg-accent font-bold text-accent-ink hover:bg-[color-mix(in_srgb,var(--accent)_88%,var(--text))]",
-  secondary: "border-border-strong bg-panel hover:border-muted",
+  accent: "bg-accent font-semibold text-accent-ink hover:brightness-110",
+  primary: "bg-ink font-semibold text-on-ink hover:opacity-90",
+  secondary: "border border-border-strong bg-panel font-medium hover:bg-panel-2",
 };
 
 export function Button({
-  variant = "primary",
+  variant = "accent",
   size = "md",
   className,
   ...props
@@ -34,8 +46,8 @@ export function Button({
   return (
     <a
       className={cx(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border font-semibold transition active:translate-y-px",
-        size === "lg" ? "h-[52px] px-6 text-[15px]" : "h-11 px-[18px] text-sm",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap transition active:translate-y-px",
+        size === "lg" ? "h-12 rounded-xl px-5 text-[15px]" : "h-[38px] rounded-[10px] px-3.5 text-[13px]",
         buttonStyles[variant],
         className,
       )}
@@ -46,31 +58,74 @@ export function Button({
 
 export function Section({ id, className, children }: { id?: string; className?: string; children: ReactNode }) {
   return (
-    <section id={id} className={cx("scroll-mt-16 py-16 sm:py-24", className)}>
+    <section id={id} className={cx("scroll-mt-20 py-16 sm:py-24", className)}>
       {children}
     </section>
   );
 }
 
+export function Eyebrow({ children }: { children: ReactNode }) {
+  return <span className="inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent-strong">{children}</span>;
+}
+
 export function SectionHead({ eyebrow, title, children, className }: { eyebrow: string; title: ReactNode; children?: ReactNode; className?: string }) {
   return (
-    <div className={cx("mb-12 max-w-[640px]", className)}>
-      <span className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-accent-text">{eyebrow}</span>
-      <h2 className="mt-3.5 mb-3.5 text-[32px] sm:text-[40px]">{title}</h2>
+    <div className={cx("mb-12 max-w-[660px]", className)}>
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="mt-4 mb-3.5 text-[30px] sm:text-[40px]">{title}</h2>
       {children && <p className="text-[17px] text-muted">{children}</p>}
     </div>
   );
 }
 
 export function Card({ className, ...props }: ComponentProps<"article">) {
-  return <article className={cx("rounded-xl border border-border bg-panel p-[26px]", className)} {...props} />;
+  return <article className={cx("rounded-[18px] border border-border bg-panel p-6", className)} {...props} />;
+}
+
+type Tone = "ok" | "warn" | "neutral";
+const pillTone: Record<Tone, string> = { ok: "bg-ok-bg text-ok", warn: "bg-warn-bg text-warn", neutral: "bg-panel-2 text-muted" };
+const dotTone: Record<Tone, string> = { ok: "bg-ok-dot", warn: "bg-warn-dot animate-pulse", neutral: "bg-dim" };
+
+export function Pill({ tone = "ok", children }: { tone?: Tone; children: ReactNode }) {
+  return (
+    <span className={cx("inline-flex items-center gap-1.5 rounded-full px-2.5 py-[3px] text-xs font-medium whitespace-nowrap", pillTone[tone])}>
+      <span className={cx("size-1.5 rounded-full", dotTone[tone])} aria-hidden />
+      {children}
+    </span>
+  );
 }
 
 export function LivePill() {
+  return <Pill>Live</Pill>;
+}
+
+// Domain → App → Data, stepped right, as on the dashboard's project cards.
+export function RouteChain({ domain, app, data }: { domain: ReactNode; app: ReactNode; data?: ReactNode }) {
+  const row = "flex min-w-0 justify-between gap-3 rounded-[10px] px-3 py-2 text-[13px]";
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-ok-bg px-2.5 py-[3px] text-xs font-semibold text-accent-text">
-      <span className="size-1.5 rounded-full bg-current" aria-hidden />
-      Live
-    </span>
+    <div className="flex flex-col gap-1.5">
+      <div className={cx(row, "bg-tint-domain")}>
+        <span className="text-muted">Domain</span>
+        <span className="truncate font-medium">{domain}</span>
+      </div>
+      <div className={cx(row, "ml-3.5 bg-tint-app")}>
+        <span className="text-muted">App</span>
+        <span className="truncate font-medium">{app}</span>
+      </div>
+      {data && (
+        <div className={cx(row, "ml-7 bg-tint-data")}>
+          <span className="text-muted">Data</span>
+          <span className="truncate font-medium">{data}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function Meter({ percent }: { percent: number }) {
+  return (
+    <div className="h-1.5 overflow-hidden rounded-full bg-track" aria-hidden>
+      <div className={cx("h-1.5 rounded-full", percent >= 80 ? "bg-warn-dot" : "bg-accent")} style={{ width: `${percent}%` }} />
+    </div>
   );
 }

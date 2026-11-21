@@ -1,6 +1,6 @@
 import { Hero, StackStrip } from "@/components/hero";
 import { Nav } from "@/components/nav";
-import { Architecture, Cli, Closing, Faq, Features, Footer, HowItWorks } from "@/components/sections";
+import { Architecture, Cli, Closing, Faq, Features, Footer, HowItWorks, Tour } from "@/components/sections";
 
 export default function Home() {
   return (
@@ -10,6 +10,7 @@ export default function Home() {
         <Hero />
         <StackStrip />
         <Features />
+        <Tour />
         <HowItWorks />
         <Cli />
         <Architecture />

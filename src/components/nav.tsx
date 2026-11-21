@@ -1,30 +1,40 @@
+import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
-import { Brand, Button, DASHBOARD_URL, Wrap } from "./ui";
+import { Brand, Button, cx, DASHBOARD_URL, Wrap } from "./ui";
 
 const links = [
-  ["#features", "Features"],
-  ["#how", "How it works"],
-  ["#cli", "CLI"],
-  ["#faq", "FAQ"],
+  ["/#features", "Features"],
+  ["/#how", "How it works"],
+  ["/#cli", "CLI"],
+  ["/#faq", "FAQ"],
+  ["/docs", "Docs"],
 ];
 
-export function Nav() {
+export function Nav({ current }: { current?: "/docs" }) {
   return (
-    <header className="sticky top-0 z-10 border-b border-border bg-bg/80 backdrop-blur-md">
-      <Wrap className="flex h-16 items-center gap-7">
-        <a href="#top" aria-label="Unstakd home">
+    <header className="sticky top-0 z-20 border-b border-border bg-panel/85 backdrop-blur-md">
+      <Wrap className="flex h-16 items-center gap-8">
+        <Link href="/" aria-label="Unstakd home">
           <Brand />
-        </a>
-        <nav aria-label="Sections" className="hidden gap-6 text-sm text-muted sm:flex">
+        </Link>
+        <nav aria-label="Main" className="hidden gap-1 md:flex">
           {links.map(([href, label]) => (
-            <a key={href} href={href} className="hover:text-text">
+            <Link
+              key={href}
+              href={href}
+              aria-current={current === href ? "page" : undefined}
+              className={cx("rounded-full px-3.5 py-2 text-sm font-medium text-muted hover:text-text", current === href && "bg-panel-2 font-semibold text-text")}
+            >
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2.5">
-          <Button variant="secondary" href={DASHBOARD_URL} className="max-sm:hidden">
-            Dashboard
+          <Link href="/docs" className="rounded-full px-3 py-2 text-sm font-medium text-muted hover:text-text md:hidden">
+            Docs
+          </Link>
+          <Button href={DASHBOARD_URL} className="max-sm:hidden">
+            Open dashboard
           </Button>
           <ThemeToggle />
         </div>

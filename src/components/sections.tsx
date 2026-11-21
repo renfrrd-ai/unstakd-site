@@ -11,9 +11,9 @@ import {
   ShieldIcon,
   UndoIcon,
 } from "./icons";
-import { Brand, Button, Card, DASHBOARD_URL, GITHUB_URL, Section, SectionHead, Wrap } from "./ui";
+import { Brand, Button, Card, cx, DASHBOARD_URL, GITHUB_URL, Meter, Pill, Section, SectionHead, Wrap } from "./ui";
 
-const Code = ({ children }: { children: ReactNode }) => <code className="font-mono text-[13px] text-soft">{children}</code>;
+const Code = ({ children }: { children: ReactNode }) => <code className="rounded-md bg-sunken px-1 font-mono text-[13px] text-soft">{children}</code>;
 
 const FEATURES: [ComponentType<SVGProps<SVGSVGElement>>, string, ReactNode][] = [
   [GitIcon, "Git push deploys", "A signed GitHub webhook queues a build for every push to your branch. Dockerfile if you have one, Railpack if you don't."],
@@ -36,13 +36,93 @@ export function Features() {
         </SectionHead>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(([Icon, title, body]) => (
-            <Card key={title}>
-              <div className="mb-[18px] grid size-9 place-items-center rounded-lg bg-ok-bg text-accent-text">
+            <Card key={title} className="shadow-card">
+              <div className="mb-[18px] grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-strong">
                 <Icon className="size-[18px]" />
               </div>
-              <h3 className="mb-2 text-[19px] tracking-[-0.02em]">{title}</h3>
+              <h3 className="mb-2 text-lg tracking-[-0.02em]">{title}</h3>
               <p className="text-[14.5px] text-muted">{body}</p>
             </Card>
+          ))}
+        </div>
+      </Wrap>
+    </Section>
+  );
+}
+
+const SCREENS: { title: string; body: string; visual: ReactNode }[] = [
+  {
+    title: "Dashboard",
+    body: "Every project as a card: its domain, app and database in one chain, CPU against what you allocated, and what happened last.",
+    visual: (
+      <div className="flex flex-col gap-2">
+        <div className="flex h-2.5 gap-0.5 overflow-hidden rounded-[5px] bg-track" aria-hidden>
+          {["w-[22%] bg-accent-strong", "w-[22%] bg-accent", "w-[12%] bg-tint-domain-strong", "w-[12%] bg-border-dashed"].map((c) => (
+            <span key={c} className={c} />
+          ))}
+        </div>
+        <span className="text-xs text-muted">2.5 of 4 vCPU allocated</span>
+      </div>
+    ),
+  },
+  {
+    title: "Projects",
+    body: "One table with status, commit, domain and live CPU and memory. Pick a row to read its build or runtime logs right below.",
+    visual: (
+      <div className="flex flex-col gap-1.5 text-xs">
+        {([["blog", "ok", "Live"], ["api", "warn", "Building"], ["docs", "neutral", "Standby"]] as const).map(([n, t, l]) => (
+          <div key={n} className="flex items-center justify-between rounded-lg bg-sunken px-2.5 py-1.5">
+            <span className="font-medium">{n}</span>
+            <Pill tone={t}>{l}</Pill>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    title: "Databases",
+    body: "Postgres and Redis next to your apps, with storage used, a masked connection string, nightly backups and one-click restore.",
+    visual: (
+      <div className="flex flex-col gap-2 rounded-xl bg-sunken p-3 text-xs">
+        <div className="flex items-center gap-2">
+          <span className="grid size-7 place-items-center rounded-lg bg-tint-data-strong text-[10px] font-semibold">PG</span>
+          <span className="font-medium">blog-pg</span>
+          <span className="ml-auto text-muted">240 MB of 2 GB</span>
+        </div>
+        <Meter percent={12} />
+      </div>
+    ),
+  },
+  {
+    title: "Domains",
+    body: "Every domain across every app: whether DNS points here, the exact record to add, and certificates that renew themselves.",
+    visual: (
+      <div className="flex items-center gap-2 rounded-xl bg-sunken p-3 font-mono text-[11px]">
+        <span className="rounded-md bg-panel-2 px-1.5 py-0.5 font-sans font-semibold">A</span>
+        <span>@</span>
+        <span className="text-muted">→ your server</span>
+        <span className="ml-auto font-sans text-xs font-medium text-ok">Verified</span>
+      </div>
+    ),
+  },
+];
+
+export function Tour() {
+  return (
+    <Section id="dashboard" className="border-t border-border bg-panel">
+      <Wrap>
+        <SectionHead eyebrow="The dashboard" title="See everything you host on one screen.">
+          Four screens cover it: what&apos;s running, how it&apos;s built, where the data lives and which domains point at it.
+        </SectionHead>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {SCREENS.map((s) => (
+            <article key={s.title} className={cx("flex flex-col gap-4 rounded-[18px] border border-border bg-bg p-5")}>
+              <div className="rounded-2xl border border-border bg-panel p-3.5 shadow-soft">{s.visual}</div>
+              <div>
+                <h3 className="mb-1.5 text-lg tracking-[-0.02em]">{s.title}</h3>
+                <p className="text-sm text-muted">{s.body}</p>
+              </div>
+            </article>
           ))}
         </div>
       </Wrap>
@@ -71,20 +151,20 @@ export function HowItWorks() {
         >
           Every deploy follows the same pipeline: a separate worker runs it, so the dashboard stays fast during long builds.
         </SectionHead>
-        <div className="grid overflow-hidden rounded-xl border border-border bg-panel sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
           {STAGES.map(([title, body], i) => (
-            <div
-              key={title}
-              className="relative border-border px-6 py-7 not-first:border-t before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-accent sm:nth-2:border-t-0 sm:even:border-l lg:not-first:border-t-0 lg:not-first:border-l"
-            >
-              <span className="font-mono text-xs font-semibold text-dim">0{i + 1}</span>
-              <h3 className="mt-2.5 mb-2 text-xl">{title}</h3>
+            <li key={title} className="flex flex-col gap-2 rounded-[18px] border border-border bg-panel p-6 shadow-card">
+              <span className="flex items-center gap-2 text-xs font-semibold text-ok">
+                <span className="grid size-6 place-items-center rounded-full bg-ok-bg">{i + 1}</span>
+                {i === STAGES.length - 1 ? "Live" : "Passed"}
+              </span>
+              <h3 className="mt-1 text-xl">{title}</h3>
               <p className="text-sm text-muted">{body}</p>
-            </div>
+            </li>
           ))}
-        </div>
-        <div className="mt-4 flex items-start gap-3.5 rounded-xl border border-dashed border-border-strong px-6 py-5 text-soft">
-          <ShieldIcon className="mt-0.5 size-5 flex-none text-accent-text" />
+        </ol>
+        <div className="mt-4 flex items-start gap-3.5 rounded-[18px] bg-accent-soft px-6 py-5 text-soft">
+          <ShieldIcon className="mt-0.5 size-5 flex-none text-accent-strong" />
           <p>
             Zero-downtime redeploys: 400 of 400 requests succeeded during a switch in testing. If any step fails, you get an alert and the
             old version keeps serving.
@@ -95,9 +175,9 @@ export function HowItWorks() {
   );
 }
 
-const P = ({ children = "$ " }: { children?: ReactNode }) => <span className="select-none text-accent-text">{children}</span>;
-const C = ({ children }: { children: ReactNode }) => <span className="text-text">{children}</span>;
-const D = ({ children }: { children: ReactNode }) => <span className="text-dim">{children}</span>;
+const P = ({ children = "$ " }: { children?: ReactNode }) => <span className="select-none text-log-ok">{children}</span>;
+const C = ({ children }: { children: ReactNode }) => <span className="text-log-text">{children}</span>;
+const D = ({ children }: { children: ReactNode }) => <span className="text-log-dim">{children}</span>;
 
 export function Cli() {
   return (
@@ -115,21 +195,20 @@ export function Cli() {
               "Build logs stream live in your terminal",
             ].map((t) => (
               <li key={t} className="flex gap-2.5">
-                <span className="font-mono text-accent-text" aria-hidden>
-                  →
-                </span>
+                <span className="mt-2 size-1.5 flex-none rounded-full bg-accent" aria-hidden />
                 {t}
               </li>
             ))}
           </ul>
         </div>
-        <div className="overflow-hidden rounded-xl border border-border bg-log-bg">
-          <div className="flex gap-1.5 border-b border-border px-4 py-3" aria-hidden>
+        <div className="overflow-hidden rounded-[18px] bg-log-bg text-log-text shadow-float">
+          <div className="flex items-center gap-1.5 border-b border-log-border px-5 py-3.5" aria-hidden>
             {[0, 1, 2].map((i) => (
-              <i key={i} className="size-2.5 rounded-full bg-panel-2" />
+              <i key={i} className="size-2.5 rounded-full bg-log-chip-on" />
             ))}
+            <span className="ml-3 text-xs text-log-muted">~/code/blog</span>
           </div>
-          <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-[1.85] text-soft">
+          <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-[1.85] text-log-muted">
             <P />
             <C>unstakd init</C>
             {"\n"}
@@ -171,10 +250,10 @@ export function Architecture() {
         <SectionHead eyebrow="Architecture" title="Everything on one server.">
           No Kubernetes, no extra services to manage. One setup script installs everything on a fresh Ubuntu VPS.
         </SectionHead>
-        <div className="rounded-[14px] border border-border bg-panel p-5 sm:p-7">
+        <div className="rounded-[22px] border-[1.5px] border-dashed border-border-dashed bg-panel/60 p-5 sm:p-7">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <Brand name="your-vps" />
-            <span className="font-mono text-[13px] text-muted">Ubuntu 24.04 · 4 vCPU · 8 GB</span>
+            <span className="text-[13px] text-muted">Ubuntu 24.04 · 4 vCPU · 8 GB</span>
           </div>
           <div className="grid gap-2.5">
             {[
@@ -183,15 +262,15 @@ export function Architecture() {
                 "Your apps",
                 <div key="apps" className="flex flex-wrap gap-2">
                   {APPS.map(([name, db]) => (
-                    <span key={name} className={`rounded-md border border-border bg-panel px-2.5 py-1 font-mono text-xs ${db ? "text-accent-text" : "text-soft"}`}>
+                    <span key={name} className={`rounded-full px-3 py-1 text-xs font-medium ${db ? "bg-tint-data-strong" : "bg-tint-app-strong"}`}>
                       {name}
                     </span>
                   ))}
                 </div>,
               ] as [string, ReactNode],
             ].map(([name, body]) => (
-              <div key={name} className="grid items-center gap-2 rounded-[10px] border border-border bg-bg px-[18px] py-3.5 sm:grid-cols-[180px_1fr] sm:gap-4">
-                <b className="font-mono text-[13px] font-semibold">{name}</b>
+              <div key={name} className="grid items-center gap-2 rounded-2xl border border-border bg-panel px-5 py-4 shadow-soft sm:grid-cols-[180px_1fr] sm:gap-4">
+                <b className="text-sm font-semibold">{name}</b>
                 {typeof body === "string" ? <span className="text-sm text-muted">{body}</span> : body}
               </div>
             ))}
@@ -216,7 +295,7 @@ export function Faq() {
         <SectionHead eyebrow="FAQ" title="Questions" />
         <div className="grid gap-4 sm:grid-cols-2">
           {FAQ.map(([q, a]) => (
-            <Card key={q}>
+            <Card key={q} className="shadow-card">
               <h3 className="mb-2 text-lg tracking-[-0.02em]">{q}</h3>
               <p className="text-muted">{a}</p>
             </Card>
@@ -232,13 +311,13 @@ export function Closing() {
     <section className="border-t border-border bg-[radial-gradient(500px_240px_at_50%_0%,var(--glow),transparent_70%)] py-20 text-center sm:py-[104px]">
       <Wrap>
         <h2 className="mb-4 text-[32px] sm:text-5xl">Ship it to your own server.</h2>
-        <p className="text-[17px] text-muted">Read the code, run the setup script, and push.</p>
+        <p className="text-[17px] text-muted">Read the code, follow the docs, and push.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3 *:flex-1 sm:*:flex-none">
-          <Button size="lg" href={GITHUB_URL}>
+          <Button size="lg" variant="primary" href={GITHUB_URL}>
             View on GitHub
           </Button>
-          <Button size="lg" variant="secondary" href={DASHBOARD_URL}>
-            Open dashboard
+          <Button size="lg" variant="secondary" href="/docs">
+            Read the docs
           </Button>
         </div>
       </Wrap>
@@ -248,11 +327,14 @@ export function Closing() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-border py-7 text-[13px] text-muted">
+    <footer className="border-t border-border bg-panel py-7 text-[13px] text-muted">
       <Wrap className="flex flex-wrap items-center gap-5">
         <Brand />
         <span>Built for my own projects, running on my own server.</span>
         <nav aria-label="Footer" className="flex gap-5 sm:ml-auto">
+          <a href="/docs" className="hover:text-text">
+            Docs
+          </a>
           <a href={GITHUB_URL} className="hover:text-text">
             GitHub
           </a>

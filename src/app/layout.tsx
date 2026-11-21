@@ -1,25 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const mono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"] });
-const display = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const mono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 const description =
   "Unstakd is a deploy platform you run on your own server. Push to GitHub and your app is live at https://<app>.unstakd.com with HTTPS, rollbacks and one-click Postgres and Redis.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://unstakd.com"),
-  title: "Unstakd · Push a repo, get a URL",
+  title: { default: "Unstakd · Push a repo, get a URL", template: "%s · Unstakd" },
   description,
   openGraph: { title: "Unstakd · Push a repo, get a URL", description, url: "/", type: "website" },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0B0D0C" },
-    { media: "(prefers-color-scheme: light)", color: "#F6F7F6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E0E10" },
+    { media: "(prefers-color-scheme: light)", color: "#F7F7F5" },
   ],
 };
 
@@ -33,7 +32,7 @@ const themeScript = `(() => {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable} ${display.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${jakarta.variable} ${mono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
