@@ -1,8 +1,8 @@
 # unstakd.com
 
 Marketing page for [Unstakd](https://github.com/renfrrd-ai/Unstakd). Next.js 16 (App Router),
-TypeScript and Tailwind 4, built as a static export (`output: "export"` → `out/`). The colors
-are the Terminal Night tokens from Unstakd's `docs/DESIGN.md`, in dark and light.
+TypeScript and Tailwind 4, built as a static export (`output: "export"` → `out/`). The look and
+tokens match the Unstakd dashboard (`Unstakd.html` / `src/app/globals.css` there), in light and dark.
 
 ```bash
 pnpm install
@@ -11,9 +11,11 @@ pnpm check   # typecheck + lint
 pnpm build   # writes out/
 ```
 
-- `src/app/` — layout (fonts, metadata, no-flash theme script), page, `icon.svg`
-- `src/components/` — `nav`, `hero` (deploy card + stack strip), `sections` (features, pipeline,
-  CLI, architecture, FAQ, closing, footer), `ui` primitives, `icons`, `theme-toggle`
+- `src/app/` — layout (fonts, metadata, no-flash theme script), the home page, `docs/` (how to use
+  Unstakd), `icon.svg`
+- `src/components/` — `nav`, `hero` (dashboard mock + stack strip), `sections` (features, dashboard
+  tour, pipeline, CLI, architecture, FAQ, closing, footer), `docs` (doc page parts), `ui` primitives,
+  `icons`, `theme-toggle`
 
 ## Deploy (on Unstakd itself)
 
