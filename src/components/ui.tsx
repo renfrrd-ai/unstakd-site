@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
+import { Grow, Item, Stagger } from "./motion";
 
 export const GITHUB_URL = "https://github.com/renfrrd-ai/Unstakd";
 export const DASHBOARD_URL = "https://dash.unstakd.com";
@@ -70,11 +71,19 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 
 export function SectionHead({ eyebrow, title, children, className }: { eyebrow: string; title: ReactNode; children?: ReactNode; className?: string }) {
   return (
-    <div className={cx("mb-12 max-w-[660px]", className)}>
-      <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-4 mb-3.5 text-[30px] sm:text-[40px]">{title}</h2>
-      {children && <p className="text-[17px] text-muted">{children}</p>}
-    </div>
+    <Stagger className={cx("mb-12 max-w-[660px]", className)}>
+      <Item>
+        <Eyebrow>{eyebrow}</Eyebrow>
+      </Item>
+      <Item className="mt-4 mb-3.5">
+        <h2 className="text-[30px] sm:text-[40px]">{title}</h2>
+      </Item>
+      {children && (
+        <Item as="p" className="text-[17px] text-muted">
+          {children}
+        </Item>
+      )}
+    </Stagger>
   );
 }
 
@@ -125,7 +134,7 @@ export function RouteChain({ domain, app, data }: { domain: ReactNode; app: Reac
 export function Meter({ percent }: { percent: number }) {
   return (
     <div className="h-1.5 overflow-hidden rounded-full bg-track" aria-hidden>
-      <div className={cx("h-1.5 rounded-full", percent >= 80 ? "bg-warn-dot" : "bg-accent")} style={{ width: `${percent}%` }} />
+      <Grow className={cx("block h-1.5 rounded-full", percent >= 80 ? "bg-warn-dot" : "bg-accent")} width={`${percent}%`} delay={0.2} />
     </div>
   );
 }

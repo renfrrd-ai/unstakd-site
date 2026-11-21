@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ScrollProgress } from "./motion";
 import { ThemeToggle } from "./theme-toggle";
 import { Brand, Button, cx, DASHBOARD_URL, Wrap } from "./ui";
 
@@ -39,6 +40,7 @@ export function Nav({ current }: { current?: "/docs" }) {
           <ThemeToggle />
         </div>
       </Wrap>
+      <ScrollProgress />
     </header>
   );
 }

@@ -145,29 +145,8 @@
   }
 }
 
-/* Deploy log lines appear one after another. */
-@keyframes log-line {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.log-line {
-  opacity: 0;
-  animation: log-line 0.35s ease forwards;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .log-line {
-    animation: none;
-    opacity: 1;
   }
 }

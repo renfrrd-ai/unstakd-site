@@ -11,6 +11,7 @@ import {
   ShieldIcon,
   UndoIcon,
 } from "./icons";
+import { Grow, Item, Pop, Reveal, Stagger } from "./motion";
 import { Brand, Button, Card, cx, DASHBOARD_URL, GITHUB_URL, Meter, Pill, Section, SectionHead, Wrap } from "./ui";
 
 const Code = ({ children }: { children: ReactNode }) => <code className="rounded-md bg-sunken px-1 font-mono text-[13px] text-soft">{children}</code>;
@@ -34,17 +35,19 @@ export function Features() {
         <SectionHead eyebrow="Features" title="What you'd get from a hosted platform, on a server you control.">
           Git push deploys, preview URLs, databases and backups in one dashboard, all running on a single VPS.
         </SectionHead>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger step={0.06} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(([Icon, title, body]) => (
-            <Card key={title} className="shadow-card">
-              <div className="mb-[18px] grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-strong">
-                <Icon className="size-[18px]" />
-              </div>
-              <h3 className="mb-2 text-lg tracking-[-0.02em]">{title}</h3>
-              <p className="text-[14.5px] text-muted">{body}</p>
-            </Card>
+            <Item key={title} lift>
+              <Card className="h-full shadow-card">
+                <div className="mb-[18px] grid size-10 place-items-center rounded-xl bg-accent-soft text-accent-strong">
+                  <Icon className="size-[18px]" />
+                </div>
+                <h3 className="mb-2 text-lg tracking-[-0.02em]">{title}</h3>
+                <p className="text-[14.5px] text-muted">{body}</p>
+              </Card>
+            </Item>
           ))}
-        </div>
+        </Stagger>
       </Wrap>
     </Section>
   );
@@ -57,8 +60,8 @@ const SCREENS: { title: string; body: string; visual: ReactNode }[] = [
     visual: (
       <div className="flex flex-col gap-2">
         <div className="flex h-2.5 gap-0.5 overflow-hidden rounded-[5px] bg-track" aria-hidden>
-          {["w-[22%] bg-accent-strong", "w-[22%] bg-accent", "w-[12%] bg-tint-domain-strong", "w-[12%] bg-border-dashed"].map((c) => (
-            <span key={c} className={c} />
+          {([["22%", "bg-accent-strong"], ["22%", "bg-accent"], ["12%", "bg-tint-domain-strong"], ["12%", "bg-border-dashed"]] as const).map(([w, c], i) => (
+            <Grow key={c} className={cx("block", c)} width={w} delay={0.3 + i * 0.12} />
           ))}
         </div>
         <span className="text-xs text-muted">2.5 of 4 vCPU allocated</span>
@@ -114,17 +117,19 @@ export function Tour() {
         <SectionHead eyebrow="The dashboard" title="See everything you host on one screen.">
           Four screens cover it: what&apos;s running, how it&apos;s built, where the data lives and which domains point at it.
         </SectionHead>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SCREENS.map((s) => (
-            <article key={s.title} className={cx("flex flex-col gap-4 rounded-[18px] border border-border bg-bg p-5")}>
-              <div className="rounded-2xl border border-border bg-panel p-3.5 shadow-soft">{s.visual}</div>
-              <div>
-                <h3 className="mb-1.5 text-lg tracking-[-0.02em]">{s.title}</h3>
-                <p className="text-sm text-muted">{s.body}</p>
-              </div>
-            </article>
+            <Item key={s.title} lift>
+              <article className="flex h-full flex-col gap-4 rounded-[18px] border border-border bg-bg p-5">
+                <div className="rounded-2xl border border-border bg-panel p-3.5 shadow-soft">{s.visual}</div>
+                <div>
+                  <h3 className="mb-1.5 text-lg tracking-[-0.02em]">{s.title}</h3>
+                  <p className="text-sm text-muted">{s.body}</p>
+                </div>
+              </article>
+            </Item>
           ))}
-        </div>
+        </Stagger>
       </Wrap>
     </Section>
   );
@@ -151,25 +156,25 @@ export function HowItWorks() {
         >
           Every deploy follows the same pipeline: a separate worker runs it, so the dashboard stays fast during long builds.
         </SectionHead>
-        <ol className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger as="ol" step={0.35} className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
           {STAGES.map(([title, body], i) => (
-            <li key={title} className="flex flex-col gap-2 rounded-[18px] border border-border bg-panel p-6 shadow-card">
+            <Item as="li" key={title} className="flex flex-col gap-2 rounded-[18px] border border-border bg-panel p-6 shadow-card">
               <span className="flex items-center gap-2 text-xs font-semibold text-ok">
-                <span className="grid size-6 place-items-center rounded-full bg-ok-bg">{i + 1}</span>
-                {i === STAGES.length - 1 ? "Live" : "Passed"}
+                <Pop className="grid size-6 place-items-center rounded-full bg-ok-bg">{i + 1}</Pop>
+                <Pop>{i === STAGES.length - 1 ? "Live" : "Passed"}</Pop>
               </span>
               <h3 className="mt-1 text-xl">{title}</h3>
               <p className="text-sm text-muted">{body}</p>
-            </li>
+            </Item>
           ))}
-        </ol>
-        <div className="mt-4 flex items-start gap-3.5 rounded-[18px] bg-accent-soft px-6 py-5 text-soft">
+        </Stagger>
+        <Reveal delay={0.2} className="mt-4 flex items-start gap-3.5 rounded-[18px] bg-accent-soft px-6 py-5 text-soft">
           <ShieldIcon className="mt-0.5 size-5 flex-none text-accent-strong" />
           <p>
             Zero-downtime redeploys: 400 of 400 requests succeeded during a switch in testing. If any step fails, you get an alert and the
             old version keeps serving.
           </p>
-        </div>
+        </Reveal>
       </Wrap>
     </Section>
   );
@@ -188,53 +193,52 @@ export function Cli() {
             A single-file CLI with no dependencies, talking to the token API. Link a repo once, then deploy, follow logs, roll back and
             manage env vars without opening the dashboard.
           </SectionHead>
-          <ul className="mt-7 grid gap-3 text-soft">
+          <Stagger as="ul" delay={0.2} className="mt-7 grid gap-3 text-soft">
             {[
               "Tokens are created in the dashboard and stored as hashes only",
               "Secrets are encrypted with AES-256-GCM at rest",
               "Build logs stream live in your terminal",
             ].map((t) => (
-              <li key={t} className="flex gap-2.5">
+              <Item as="li" key={t} className="flex gap-2.5">
                 <span className="mt-2 size-1.5 flex-none rounded-full bg-accent" aria-hidden />
                 {t}
-              </li>
+              </Item>
             ))}
-          </ul>
+          </Stagger>
         </div>
-        <div className="overflow-hidden rounded-[18px] bg-log-bg text-log-text shadow-float">
+        <Reveal className="overflow-hidden rounded-[18px] bg-log-bg text-log-text shadow-float">
           <div className="flex items-center gap-1.5 border-b border-log-border px-5 py-3.5" aria-hidden>
             {[0, 1, 2].map((i) => (
               <i key={i} className="size-2.5 rounded-full bg-log-chip-on" />
             ))}
             <span className="ml-3 text-xs text-log-muted">~/code/blog</span>
           </div>
-          <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-[1.85] text-log-muted">
-            <P />
-            <C>unstakd init</C>
-            {"\n"}
-            <D>Linked this repo to</D> blog{"\n"}
-            <P />
-            <C>unstakd env set RESEND_KEY=re_••••••</C>
-            {"\n"}
-            <D>Saved 1 variable (secret)</D>
-            {"\n"}
-            <P />
-            <C>unstakd deploy</C>
-            {"\n"}
-            <D>Queued #43 · main@9c1e07b</D>
-            {"\n"}
-            {"  Building with Railpack…\n  Health check passed · 200 in 38ms\n"}
-            <P>✓ </P>Live at https://blog.unstakd.com{"\n"}
-            <P />
-            <C>unstakd rollback</C>
-            {"\n"}
-            <P>✓ </P>#42 is live again (1.9s)
-          </pre>
-        </div>
+          <Stagger as="pre" delay={0.35} step={0.22} className="overflow-x-auto p-5 font-mono text-[13px] leading-[1.85] text-log-muted">
+            {TERMINAL.map((line, i) => (
+              <Item as="span" key={i} className="block">
+                {line}
+              </Item>
+            ))}
+          </Stagger>
+        </Reveal>
       </Wrap>
     </Section>
   );
 }
+
+const TERMINAL: ReactNode[] = [
+  <><P /><C>unstakd init</C></>,
+  <><D>Linked this repo to</D> blog</>,
+  <><P /><C>unstakd env set RESEND_KEY=re_••••••</C></>,
+  <D key="saved">Saved 1 variable (secret)</D>,
+  <><P /><C>unstakd deploy</C></>,
+  <D key="queued">Queued #43 · main@9c1e07b</D>,
+  "  Building with Railpack…",
+  "  Health check passed · 200 in 38ms",
+  <><P>✓ </P>Live at https://blog.unstakd.com</>,
+  <><P /><C>unstakd rollback</C></>,
+  <><P>✓ </P>#42 is live again (1.9s)</>,
+];
 
 const LAYERS: [string, ReactNode][] = [
   ["Caddy", "HTTPS for the wildcard subdomain and custom domains, routing, static files"],
@@ -255,26 +259,26 @@ export function Architecture() {
             <Brand name="your-vps" />
             <span className="text-[13px] text-muted">Ubuntu 24.04 · 4 vCPU · 8 GB</span>
           </div>
-          <div className="grid gap-2.5">
+          <Stagger step={0.12} className="grid gap-2.5">
             {[
               ...LAYERS,
               [
                 "Your apps",
                 <div key="apps" className="flex flex-wrap gap-2">
                   {APPS.map(([name, db]) => (
-                    <span key={name} className={`rounded-full px-3 py-1 text-xs font-medium ${db ? "bg-tint-data-strong" : "bg-tint-app-strong"}`}>
+                    <Pop key={name} className={`rounded-full px-3 py-1 text-xs font-medium ${db ? "bg-tint-data-strong" : "bg-tint-app-strong"}`}>
                       {name}
-                    </span>
+                    </Pop>
                   ))}
                 </div>,
               ] as [string, ReactNode],
             ].map(([name, body]) => (
-              <div key={name} className="grid items-center gap-2 rounded-2xl border border-border bg-panel px-5 py-4 shadow-soft sm:grid-cols-[180px_1fr] sm:gap-4">
+              <Item key={name} className="grid items-center gap-2 rounded-2xl border border-border bg-panel px-5 py-4 shadow-soft sm:grid-cols-[180px_1fr] sm:gap-4">
                 <b className="text-sm font-semibold">{name}</b>
                 {typeof body === "string" ? <span className="text-sm text-muted">{body}</span> : body}
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </div>
       </Wrap>
     </Section>
@@ -293,14 +297,16 @@ export function Faq() {
     <Section id="faq">
       <Wrap>
         <SectionHead eyebrow="FAQ" title="Questions" />
-        <div className="grid gap-4 sm:grid-cols-2">
+        <Stagger className="grid gap-4 sm:grid-cols-2">
           {FAQ.map(([q, a]) => (
-            <Card key={q} className="shadow-card">
-              <h3 className="mb-2 text-lg tracking-[-0.02em]">{q}</h3>
-              <p className="text-muted">{a}</p>
-            </Card>
+            <Item key={q}>
+              <Card className="h-full shadow-card">
+                <h3 className="mb-2 text-lg tracking-[-0.02em]">{q}</h3>
+                <p className="text-muted">{a}</p>
+              </Card>
+            </Item>
           ))}
-        </div>
+        </Stagger>
       </Wrap>
     </Section>
   );
@@ -309,18 +315,20 @@ export function Faq() {
 export function Closing() {
   return (
     <section className="border-t border-border bg-[radial-gradient(500px_240px_at_50%_0%,var(--glow),transparent_70%)] py-20 text-center sm:py-[104px]">
-      <Wrap>
-        <h2 className="mb-4 text-[32px] sm:text-5xl">Ship it to your own server.</h2>
-        <p className="text-[17px] text-muted">Read the code, follow the docs, and push.</p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3 *:flex-1 sm:*:flex-none">
+      <Stagger as="div" className="mx-auto max-w-[1280px] px-4 sm:px-12">
+        <Item className="mb-4">
+          <h2 className="text-[32px] sm:text-5xl">Ship it to your own server.</h2>
+        </Item>
+        <Item as="p" className="text-[17px] text-muted">Read the code, follow the docs, and push.</Item>
+        <Item className="mt-8 flex flex-wrap justify-center gap-3 *:flex-1 sm:*:flex-none">
           <Button size="lg" variant="primary" href={GITHUB_URL}>
             View on GitHub
           </Button>
           <Button size="lg" variant="secondary" href="/docs">
             Read the docs
           </Button>
-        </div>
-      </Wrap>
+        </Item>
+      </Stagger>
     </section>
   );
 }
