@@ -20,6 +20,7 @@ const TOC: [string, string][] = [
   ["domains", "Custom domains"],
   ["previews", "Pull request previews"],
   ["usage", "CPU, memory and standby"],
+  ["map", "The map"],
   ["alerts", "Alerts"],
   ["cli", "CLI and API tokens"],
   ["troubleshooting", "Troubleshooting"],
@@ -71,8 +72,8 @@ export default function DocsPage() {
               </li>
             </ul>
             <Callout title="The top bar">
-              Dashboard, Projects, Databases, Domains, Activity and Server are the screens you&apos;ll use. Map and Billing are marked
-              <b className="mx-1 inline">Soon</b>and aren&apos;t active yet.
+              Dashboard, Projects, Map, Databases, Domains, Activity and Server are the screens you&apos;ll use. Billing is marked
+              <b className="mx-1 inline">Soon</b>and isn&apos;t active yet.
             </Callout>
           </DocSection>
 
@@ -274,6 +275,29 @@ export default function DocsPage() {
               <Path>Project › Settings › Put on standby</Path> stops the container to free memory and keeps its domains, env vars and images.
               Press <strong>Start</strong> on its Dashboard card (or <strong>Start app</strong> in Settings) to bring it back.
             </p>
+          </DocSection>
+
+          <DocSection id="map" title="The map" lead="One picture of everything you host: which domains reach which apps, and which databases they use.">
+            <p>
+              Open <Path>Map</Path>. Domains are on the left, apps in the middle (inside the box for your server) and databases on the
+              right, joined by lines. A dashed line means that domain isn&apos;t serving yet, because DNS is still pending or points
+              somewhere else. Each block&apos;s dot shows its status.
+            </p>
+            <ul className="m-0 flex list-disc flex-col gap-2 pl-5 marker:text-dim">
+              <li>Drag a block to move it, drag the background to pan, and scroll or use <strong>+</strong> / <strong>−</strong> to zoom.</li>
+              <li>
+                Click a block to see its details and what it&apos;s connected to, with buttons to deploy, read logs, check DNS records or
+                open the database.
+              </li>
+              <li>
+                <strong>Fit to screen</strong> shows everything; <strong>Tidy layout</strong> puts every block back. Your layout is saved in
+                this browser only.
+              </li>
+              <li>
+                <strong>Open map</strong> on the Dashboard, <strong>Show on map</strong> on Projects and <strong>See it on the map</strong> on
+                Domains jump straight to that block.
+              </li>
+            </ul>
           </DocSection>
 
           <DocSection id="alerts" title="Alerts">
