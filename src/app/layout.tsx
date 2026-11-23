@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { MotionProvider } from "@/components/motion";
 import "./globals.css";
+import { ogImage } from "./og";
 
 const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 const mono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"], weight: ["400", "500"] });
@@ -13,7 +14,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://unstakd.com"),
   title: { default: "Unstakd · Push a repo, get a URL", template: "%s · Unstakd" },
   description,
-  openGraph: { title: "Unstakd · Push a repo, get a URL", description, url: "/", type: "website" },
+  applicationName: "Unstakd",
+  keywords: ["self-hosted PaaS", "deploy platform", "Heroku alternative", "Docker", "Caddy", "Postgres", "Redis", "VPS"],
+  alternates: { canonical: "/" },
+  openGraph: { title: "Unstakd · Push a repo, get a URL", description, url: "/", siteName: "Unstakd", locale: "en_US", type: "website", images: [ogImage] },
+  twitter: { card: "summary_large_image", title: "Unstakd · Push a repo, get a URL", description, images: [ogImage] },
 };
 
 export const viewport: Viewport = {

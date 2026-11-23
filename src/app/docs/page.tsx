@@ -3,10 +3,17 @@ import { Callout, Code, DocSection, H3, Path, Step, Steps, Table, Terminal } fro
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/sections";
 import { DASHBOARD_URL, Eyebrow, GITHUB_URL, Wrap } from "@/components/ui";
+import { ogImage } from "../og";
+
+const description =
+  "How to use Unstakd: deploy a repo, read logs, roll back, add environment variables, databases, custom domains, previews, alerts and the CLI.";
 
 export const metadata: Metadata = {
   title: "Docs",
-  description: "How to use Unstakd: deploy a repo, read logs, roll back, add environment variables, databases, custom domains, previews, alerts and the CLI.",
+  description,
+  alternates: { canonical: "/docs" },
+  openGraph: { title: "Docs · Unstakd", description, url: "/docs", siteName: "Unstakd", type: "article", images: [ogImage] },
+  twitter: { card: "summary_large_image", title: "Docs · Unstakd", description, images: [ogImage] },
 };
 
 const TOC: [string, string][] = [
