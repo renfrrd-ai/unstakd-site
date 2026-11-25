@@ -1,7 +1,6 @@
 import { Hero, StackStrip } from "@/components/hero";
 import { Nav } from "@/components/nav";
 import { Architecture, Cli, Closing, Faq, Features, Footer, HowItWorks, Tour } from "@/components/sections";
-import { GITHUB_URL } from "@/components/ui";
 
 // Structured data so search engines know this page describes a piece of software.
 const jsonLd = {
@@ -11,9 +10,7 @@ const jsonLd = {
   url: "https://unstakd.com",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Linux",
-  description: "A deploy platform you run on your own server: push to GitHub and get an HTTPS URL, with rollbacks and one-click Postgres and Redis.",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  sameAs: [GITHUB_URL],
+  description: "A personal deploy platform running on a single server: push to GitHub and get an HTTPS URL, with rollbacks and one-click Postgres and Redis.",
 };
 
 export default function Home() {

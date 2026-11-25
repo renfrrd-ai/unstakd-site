@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Callout, Code, DocSection, H3, Path, Step, Steps, Table, Terminal } from "@/components/docs";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/sections";
-import { DASHBOARD_URL, Eyebrow, GITHUB_URL, Wrap } from "@/components/ui";
+import { DASHBOARD_URL, Eyebrow, Wrap } from "@/components/ui";
 import { ogImage } from "../og";
 
 const description =
@@ -63,7 +63,7 @@ export default function DocsPage() {
         </aside>
 
         <article className="flex max-w-[760px] flex-col gap-12">
-          <DocSection id="start" title="Before you start" lead="Unstakd runs on one server you own. These docs assume it's installed and you can open the dashboard.">
+          <DocSection id="start" title="Before you start" lead="Unstakd is a personal platform on one server. These docs are for anyone who can already open the dashboard.">
             <ul className="m-0 flex list-disc flex-col gap-2.5 pl-5 marker:text-dim">
               <li>
                 <strong>Sign in with GitHub.</strong> Only the GitHub accounts on the server&apos;s allowlist can sign in; everyone else
@@ -75,7 +75,7 @@ export default function DocsPage() {
               </li>
               <li>
                 <strong>Point your apps domain at the server.</strong> Every app gets <Code>&lt;name&gt;.unstakd.com</Code>; a wildcard DNS
-                record sends all of them to your server.
+                record sends all of them to the server.
               </li>
             </ul>
             <Callout title="The top bar">
@@ -319,8 +319,8 @@ export default function DocsPage() {
           <DocSection id="cli" title="CLI and API tokens" lead="A single-file CLI with no dependencies (Node 20+). Deploy, follow logs, roll back and manage env vars from your terminal.">
             <Steps>
               <Step title={<>Create a token in <Path>Server › API tokens</Path></>}>It&apos;s shown once; copy it then. Revoking it stops it working immediately.</Step>
-              <Step title="Install the CLI and sign in">
-                <Terminal lines={["$ git clone https://github.com/renfrrd-ai/Unstakd && cd Unstakd", "$ pnpm link --global", `$ unstakd login ${DASHBOARD_URL}`, "Paste your token: unst_••••••••"]} />
+              <Step title="Install the CLI from your Unstakd checkout and sign in">
+                <Terminal lines={["$ cd Unstakd", "$ pnpm link --global", `$ unstakd login ${DASHBOARD_URL}`, "Paste your token: unst_••••••••"]} />
               </Step>
               <Step title="Link a repo, then use it from there">
                 <Terminal lines={["$ unstakd init", "Linked this repo to blog", "$ unstakd deploy", "Queued #43 · main@9c1e07b", "✓ Live at https://blog.unstakd.com"]} />
@@ -357,10 +357,6 @@ export default function DocsPage() {
                 ["CPU bar is amber", "The app is using 80% or more of its allocation. Give it a bigger size in Settings."],
               ]}
             />
-            <p>
-              Still stuck? Open an issue on{" "}
-              <a href={GITHUB_URL} className="font-medium text-accent-text hover:text-accent-strong">GitHub</a>.
-            </p>
           </DocSection>
         </article>
       </Wrap>
