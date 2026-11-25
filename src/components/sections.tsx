@@ -12,7 +12,7 @@ import {
   UndoIcon,
 } from "./icons";
 import { Grow, Item, Pop, Reveal, Stagger } from "./motion";
-import { Brand, Button, Card, cx, DASHBOARD_URL, GITHUB_URL, Meter, Pill, Section, SectionHead, Wrap } from "./ui";
+import { Brand, Button, Card, cx, DASHBOARD_URL, Meter, Pill, Section, SectionHead, Wrap } from "./ui";
 
 const Code = ({ children }: { children: ReactNode }) => <code className="rounded-md bg-sunken px-1 font-mono text-[13px] text-soft">{children}</code>;
 
@@ -32,7 +32,7 @@ export function Features() {
   return (
     <Section id="features">
       <Wrap>
-        <SectionHead eyebrow="Features" title="What you'd get from a hosted platform, on a server you control.">
+        <SectionHead eyebrow="Features" title="What you'd get from a hosted platform, on one server.">
           Git push deploys, preview URLs, databases and backups in one dashboard, all running on a single VPS.
         </SectionHead>
         <Stagger step={0.06} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -252,11 +252,11 @@ export function Architecture() {
     <Section id="server">
       <Wrap>
         <SectionHead eyebrow="Architecture" title="Everything on one server.">
-          No Kubernetes, no extra services to manage. One setup script installs everything on a fresh Ubuntu VPS.
+          No Kubernetes, no extra services to manage. It all runs on a single Ubuntu VPS.
         </SectionHead>
         <div className="rounded-[22px] border-[1.5px] border-dashed border-border-dashed bg-panel/60 p-5 sm:p-7">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-            <Brand name="your-vps" />
+            <Brand name="unstakd-vps" />
             <span className="text-[13px] text-muted">Ubuntu 24.04 · 4 vCPU · 8 GB</span>
           </div>
           <Stagger step={0.12} className="grid gap-2.5">
@@ -286,7 +286,7 @@ export function Architecture() {
 }
 
 const FAQ = [
-  ["Can I sign up?", "Not yet. Unstakd currently runs one person's projects on one server, and public accounts come later. The full source is on GitHub if you want to run your own."],
+  ["Can I sign up?", "Not yet. Unstakd currently runs one person's projects on one server, and public accounts come later."],
   ["What can it deploy?", "Anything with a Dockerfile, most Node, Python and Go apps through Railpack, and static sites. Each app runs in its own container with CPU and memory limits."],
   ["What happens if the server dies?", "Database backups go to Cloudflare R2 every night, along with a backup of the platform's own database. Secrets stay encrypted with a key that never touches the database."],
   ["Why build another PaaS?", "To have one dashboard and one bill instead of side projects spread across hosts with different limits, cold starts and pricing, and to learn how builds, proxies and TLS work along the way."],
@@ -317,14 +317,11 @@ export function Closing() {
     <section className="border-t border-border bg-[radial-gradient(500px_240px_at_50%_0%,var(--glow),transparent_70%)] py-20 text-center sm:py-[104px]">
       <Stagger as="div" className="mx-auto max-w-[1280px] px-4 sm:px-12">
         <Item className="mb-4">
-          <h2 className="text-[32px] sm:text-5xl">Ship it to your own server.</h2>
+          <h2 className="text-[32px] sm:text-5xl">Push a repo. Get a URL.</h2>
         </Item>
-        <Item as="p" className="text-[17px] text-muted">Read the code, follow the docs, and push.</Item>
+        <Item as="p" className="text-[17px] text-muted">The docs cover everything from the first push to a rollback.</Item>
         <Item className="mt-8 flex flex-wrap justify-center gap-3 *:flex-1 sm:*:flex-none">
-          <Button size="lg" variant="primary" href={GITHUB_URL}>
-            View on GitHub
-          </Button>
-          <Button size="lg" variant="secondary" href="/docs">
+          <Button size="lg" variant="primary" href="/docs">
             Read the docs
           </Button>
         </Item>
@@ -342,9 +339,6 @@ export function Footer() {
         <nav aria-label="Footer" className="flex gap-5 sm:ml-auto">
           <a href="/docs" className="hover:text-text">
             Docs
-          </a>
-          <a href={GITHUB_URL} className="hover:text-text">
-            GitHub
           </a>
           <a href={DASHBOARD_URL} className="hover:text-text">
             Dashboard

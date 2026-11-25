@@ -1,7 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 import { Grow, Item, Stagger } from "./motion";
 
-export const GITHUB_URL = "https://github.com/renfrrd-ai/Unstakd";
 export const DASHBOARD_URL = "https://dash.unstakd.com";
 
 export function cx(...parts: (string | false | null | undefined)[]) {

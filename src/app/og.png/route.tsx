@@ -34,7 +34,7 @@ export async function GET() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 92, fontWeight: 700, letterSpacing: -3, lineHeight: 1.02 }}>Push a repo.</div>
           <div style={{ fontSize: 92, fontWeight: 700, letterSpacing: -3, lineHeight: 1.02, color: c.accentText }}>Get a URL.</div>
-          <div style={{ fontSize: 32, color: c.muted, marginTop: 28 }}>A deploy platform you run on your own server. HTTPS, rollbacks, Postgres and Redis.</div>
+          <div style={{ fontSize: 32, color: c.muted, marginTop: 28 }}>A personal deploy platform on one server. HTTPS, rollbacks, Postgres and Redis.</div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", alignSelf: "flex-start", gap: 16, padding: "16px 24px", borderRadius: 14, background: c.panel, border: `2px solid ${c.line}`, fontSize: 28 }}>

@@ -1,7 +1,6 @@
-import { GitHubIcon } from "./icons";
 import { HeroMock } from "./hero-mock";
 import { Item, Stagger } from "./motion";
-import { Button, GITHUB_URL, Wrap } from "./ui";
+import { Button, Wrap } from "./ui";
 
 export function Hero() {
   return (
@@ -14,7 +13,7 @@ export function Hero() {
         <Stagger now delay={0.05} step={0.09}>
           <Item as="span" className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-panel px-3 py-1 text-xs font-medium text-muted">
             <span className="size-1.5 rounded-full bg-ok-dot" aria-hidden />
-            Self-hosted · one VPS · open source
+            Personal platform · one VPS
           </Item>
           <Item as="h1" className="mt-5 mb-5 text-[44px] sm:text-[64px]">
             Push a repo.
@@ -22,20 +21,19 @@ export function Hero() {
             <span className="text-accent-text">Get a URL.</span>
           </Item>
           <Item as="p" className="max-w-[520px] text-base text-soft sm:text-lg">
-            Unstakd is a deploy platform you run on your own server. Push to GitHub and your app goes live at{" "}
+            Unstakd is my personal deploy platform, running on a single server. I push to GitHub and the app goes live at{" "}
             <code className="rounded-md bg-accent-soft px-1.5 py-0.5 font-mono text-[14px] text-accent-strong">&lt;app&gt;.unstakd.com</code> with HTTPS, instant
             rollbacks and one-click Postgres and Redis.
           </Item>
           <Item className="mt-8 flex flex-wrap gap-3 *:flex-1 sm:*:flex-none">
-            <Button size="lg" variant="primary" href={GITHUB_URL}>
-              <GitHubIcon className="size-[18px]" />
-              View on GitHub
-            </Button>
-            <Button size="lg" variant="secondary" href="/docs">
+            <Button size="lg" variant="primary" href="/docs">
               Read the docs
             </Button>
+            <Button size="lg" variant="secondary" href="#how">
+              How it works
+            </Button>
           </Item>
-          <Item as="p" className="mt-5 text-[13px] text-muted">No cold starts, no per-seat pricing. Your server, your bill.</Item>
+          <Item as="p" className="mt-5 text-[13px] text-muted">No cold starts, no per-seat pricing. One server, one bill.</Item>
         </Stagger>
         <HeroMock />
       </Wrap>

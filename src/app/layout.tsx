@@ -8,14 +8,14 @@ const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin
 const mono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 const description =
-  "Unstakd is a deploy platform you run on your own server. Push to GitHub and your app is live at https://<app>.unstakd.com with HTTPS, rollbacks and one-click Postgres and Redis.";
+  "Unstakd is a personal deploy platform running on a single server. A push to GitHub goes live at https://<app>.unstakd.com with HTTPS, rollbacks and one-click Postgres and Redis.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://unstakd.com"),
   title: { default: "Unstakd · Push a repo, get a URL", template: "%s · Unstakd" },
   description,
   applicationName: "Unstakd",
-  keywords: ["self-hosted PaaS", "deploy platform", "Heroku alternative", "Docker", "Caddy", "Postgres", "Redis", "VPS"],
+  keywords: ["personal deploy platform", "Docker", "Caddy", "Postgres", "Redis", "VPS"],
   alternates: { canonical: "/" },
   openGraph: { title: "Unstakd · Push a repo, get a URL", description, url: "/", siteName: "Unstakd", locale: "en_US", type: "website", images: [ogImage] },
   twitter: { card: "summary_large_image", title: "Unstakd · Push a repo, get a URL", description, images: [ogImage] },

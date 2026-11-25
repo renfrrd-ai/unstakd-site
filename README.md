@@ -1,6 +1,6 @@
 # unstakd.com
 
-Marketing page for [Unstakd](https://github.com/renfrrd-ai/Unstakd). Next.js 16 (App Router),
+Marketing page for Unstakd. Next.js 16 (App Router),
 TypeScript and Tailwind 4, built as a static export (`output: "export"` → `out/`). The look and
 tokens match the Unstakd dashboard (`Unstakd.html` / `src/app/globals.css` there), in light and dark.
 
